@@ -3,7 +3,7 @@
     "terminal.integrated.shell.windows": "c:/Program Files/PowerShell/7/pwsh.exe",
     "terminal.integrated.fontFamily": "monospace",
     "terminal.integrated.fontWeight": "1",
-    "workbench.editor.showTabs": false,
+    "workbench.editor.showTabs": "multiple",
     "workbench.statusBar.visible": true,
     "editor.lineNumbers": "on",
     "C_Cpp.clang_format_style": "{ BasedOnStyle: Google, IndentWidth: 4, ColumnLimit: 0, NamespaceIndentation: All}",
@@ -49,6 +49,8 @@
         "typeinfo": "c",
         "windowsx.h": "c",
         "vulkan_platform.h": "c",
-        "renderer_frontend.h": "c"
-    }
+        "renderer_frontend.h": "c",
+        "intrin.h": "c"
+    },
+    "C_Cpp.errorSquiggles": "disabled"
 }
