@@ -1,4 +1,4 @@
-#include "platformn.h"
+#include "platform.h"
 
 #if KPLATFORM_WINDOWS
 
@@ -8,44 +8,42 @@
 #include <windowsx.h> // parametro de extraçao de input
 #include <stdlib.h>
 
-typedf struct internal_state{
-    HINSTANCE hInstance;
+typedef struct internal_state{
+    HINSTANCE h_instance;
     HWND hwnd;
 } internal_state;
 
 //clock
 static f64 clock_frequency;
-static LARGE_INTERGER start_time;
-
+static LARGE_INTEGER start_time;
 
 LRESULT CALLBACK win32_process_message(HWND hwnd, u32 msg, WPARAM w_param, LPARAM l_param);
 
 b8 platform_startup(
-    platform_state* plat_state,
-    const char* applicatoin_name,
+    platform_state *plat_state,
+    const char *application_name,
     i32 x,
     i32 y,
     i32 width,
-    i32 height
-){
-    plat_state ->internal_state = malloc(sizeof(internal_state));
-    internal_state *state = (internal_state*)plat_state ->internal_state;
+    i32 height) {
+    plat_state->internal_state = malloc(sizeof(internal_state));
+    internal_state *state = (internal_state *)plat_state->internal_state;
 
-    state ->h_instance = GetModuleHandleA(0);
+    state->h_instance = GetModuleHandleA(0);
 
     // Registro da classe window.
     HICON icon = LoadIcon(state->h_instance, IDI_APPLICATION);
     WNDCLASSA wc;
     memset(&wc,0,sizeof(wc));
-    wc.styke = CS_DBLCLKS;
+    wc.style = CS_DBLCLKS;
     wc.lpfnWndProc = win32_process_message;// é chamadao pelo dispach message em platform_pump_messages
     wc.cbClsExtra = 0;
     wc.cbWndExtra = 0;
-    wc.HInstance = state->h_instance;
+    wc.hInstance = state->h_instance;
     wc.hIcon = icon;
     wc.hCursor = LoadCursor(NULL, IDC_ARROW); //Com ele sendo nulo, o controle se torna manual
     wc.hbrBackground = NULL; //Transparente
-    wc.lpszMenuName = "THE_GAME_EGINE";
+    wc.lpszClassName  = "THE_GAME_EGINE";
 
     if(!RegisterClassA(&wc)){
         MessageBoxA(0, "Falha no registro da janela","Error", MB_ICONEXCLAMATION | MB_OK);
@@ -66,9 +64,9 @@ b8 platform_startup(
     u32 window_style = WS_OVERLAPPED | WS_SYSMENU | WS_CAPTION;
     u32 window_ex_style = WS_EX_APPWINDOW;
 
-    window_syle |= WS_MAXIMIZEBOX;
-    window_syle |= WS_MINMIZEBOX;
-    window_syle |= WS_THICKFRAME;
+    window_style |= WS_MAXIMIZEBOX;
+    window_style |= WS_MINIMIZEBOX;
+    window_style |= WS_THICKFRAME;
 
     // Obter o tamanho da janela
     RECT border_rect = {0,0,0,0};
@@ -83,10 +81,9 @@ b8 platform_startup(
     window_height += border_rect.bottom - border_rect.top;
 
     HWND handle = CreateWindowExA(
-        window_ex_style, "THE_GAME_ENGINE_WINDOW_CLASS", applicatoin_name,, 
+        window_ex_style, "THE_GAME_EGINE", application_name, 
         window_style, window_x, window_y, window_width, window_height,
-        0, 0 , state->h_instance, 0
-    )
+        0, 0 , state->h_instance, 0);
 
     if(handle == 0){
         MessageBoxA(NULL, "Falha na criaçao da janela","Error", MB_ICONEXCLAMATION | MB_OK);
@@ -134,7 +131,7 @@ b8 platform_pump_messages(platform_state* plat_state){
 }
 
 // TODO: Implementaçao porca, sera mudada depois
-void *platform_allocate(u64 size, b8akigned){
+void *platform_allocate(u64 size, b8 aligned){
     return malloc(size);
 }
 
@@ -155,27 +152,27 @@ void* platform_set_memory(void* dest, i32 value, u64 size){
 }
 
 void platform_console_write(const char* message, u8 color){
-    Handle console_handle = GetStdHandle(STD_OUTPUT_HANDLE);
+    HANDLE console_handle = GetStdHandle(STD_OUTPUT_HANDLE);
     // FATAL, Error, Warn, Info, Debug, Trace
     static u8 levels[6]= {64,4,6,2,1,8};
     SetConsoleTextAttribute(console_handle, levels[color]);
 
     OutputDebugStringA(message);
     u64 length = strlen(message);
-    LPDWORD nuumber_written=0;
-    WriteConsoleA(GetStdHandle(STD_OUTPUT_HANDLE), message, (DWORD)length, nuumber_written, 0);
+    LPDWORD number_written=0;
+    WriteConsoleA(GetStdHandle(STD_OUTPUT_HANDLE), message, (DWORD)length, number_written, 0);
 }
 
 void platform_console_write_error(const char* message, u8 color){
-    Handle console_handle = GetStdHandle(STD_OUTPUT_HANDLE);
+    HANDLE console_handle = GetStdHandle(STD_OUTPUT_HANDLE);
     // FATAL, Error, Warn, Info, Debug, Trace
     static u8 levels[6]= {64,4,6,2,1,8};
     SetConsoleTextAttribute(console_handle, levels[color]);
 
     OutputDebugStringA(message);
     u64 length = strlen(message);
-    LPDWORD nuumber_written=0;
-    WriteConsoleA(GetStdHandle(STD_ERROR_HANDLE), message, (DWORD)length, nuumber_written, 0);
+    LPDWORD number_written=0;
+    WriteConsoleA(GetStdHandle(STD_ERROR_HANDLE), message, (DWORD)length, number_written, 0);
 }
 
 f64 platform_get_abs_time(){
@@ -188,4 +185,60 @@ void platform_sleep(u64 ms){
     Sleep(ms);
 }
 
-// #endif
+LRESULT CALLBACK win32_process_message(HWND hwnd, u32 msg, WPARAM w_param, LPARAM l_param){
+    switch(msg){
+        case WM_ERASEBKGND:
+            // Notifica ao sistema que o fundo sera a pintado manualmente pela aplicaçao
+            return 1;
+        case WM_CLOSE:
+            // TODO: Enviar evento de fechamento da janela
+            return 0;
+        case WM_DESTROY:
+            PostQuitMessage(0);
+            return 0;
+        case WM_SIZE:{
+            // Pega o Tamanho autalizadao
+            // RECT r;
+            // GetClientRect(hwnd, &r);
+            // u32 width = r.right - r.left;
+            // u32 height = r.bottom - r.top;
+
+            // TODO: Enviar evento de redimensionamento
+        }break;
+        case WM_KEYDOWN:
+        case WM_SYSKEYDOWN:
+        case WM_KEYUP:
+        case WM_SYSKEYUP:{
+            // Key apertqada/solta
+            // b8 pressed = (msg == WM_KEYDOWN || msg == WM_SYSKEYDOWN);
+            // TODO: input processing
+        }break;
+        case WM_MOUSEMOVE:{
+            // //Mouse move
+            // i32 x_pos = GET_X_LPARAM(l_param);
+            // i32 y_pos = GET_Y_LPARAM(l_param); 
+            // TODO: input processing
+        }break;
+        case WM_MOUSEWHEEL:{
+            // i32 z_delta = GET_WHEEL_DELTA_WPARAM(w_param);
+            // if(z_delta != 0){
+            //     // Deixando o input em um range de (-1 a 1)
+            //     z_delta = (z_delta < 0) ? -1 : 1;
+            //     // TODO: input processing
+            // }
+        }break;
+
+        case WM_LBUTTONDOWN:
+        case WM_MBUTTONDOWN:
+        case WM_RBUTTONDOWN:
+        case WM_LBUTTONUP:
+        case WM_MBUTTONUP:
+        case WM_RBUTTONUP:{
+            // b8 pressed = (msg == WM_LBUTTONDOWN || msg == WM_MBUTTONDOWN || msg == WM_RBUTTONDOWN);
+            // TODO: input processing
+        }break;
+    }
+    return DefWindowProcA(hwnd, msg, w_param, l_param);
+};
+
+#endif //Platform Windows

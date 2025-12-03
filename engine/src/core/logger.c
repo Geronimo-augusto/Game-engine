@@ -1,5 +1,6 @@
 #include "logger.h"
 #include "asserts.h"
+#include "platform/platform.h"
 
 // TODO: temporario
 #include <stdio.h>
@@ -27,10 +28,11 @@ void log_output(log_level level, const char* menssgem, ...){
         "[TRACE]: "
     };
 
-    // b8 is_error = level<2;
+    b8 is_error = level<LOG_LEVEL_WARN;
 
     //Sera imposto um limite de 32k de caracteres para os logs,não é recomendado. Entretanto isso evita o deslocamento de memoria dinamica tornando o sistema mais rápido.
-    char out_message[32000];
+    const i32 msg_length = 32000;
+    char out_message[msg_length];
     memset(out_message, 0, sizeof(out_message));
 
     // Formatação da mensagem original.
@@ -44,8 +46,12 @@ void log_output(log_level level, const char* menssgem, ...){
     char out_message_output[32000];
     sprintf(out_message_output, "%s%s\n", level_strings[level], out_message);
 
-    // TODO: Saida especifica para windowa posterior
-    printf("%s", out_message_output);
+    // Saida especifica para windows
+    if(is_error){
+        platform_console_write_error(out_message_output, level);
+    }else{
+        platform_console_write(out_message_output, level);
+    }
 }
 
 void report_assertion_failure(const char* expression, const char* message, const char* file, i32 line){

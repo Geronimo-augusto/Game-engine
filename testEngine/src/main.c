@@ -3,7 +3,8 @@
 
 //pra formataçao funcionar
 // #include <windows.h>
-
+// TODO: teste
+#include <core/platform/platform.h>
 
 int main(void){
     //formatação de console para utf-8 (se ativa pelas configs do windows nao precisa)
@@ -15,6 +16,13 @@ int main(void){
     KDEBUG ("Esse é um log fatal: %f", 3.14f);
     KTRACE ("Esse é um log fatal: %f", 3.14f);
 
-    KASSERT(1==0);
+    platform_state state;
+    if(platform_startup(&state, "Test Engine Window", 100,100,1280,720)){
+        while (TRUE)
+        {
+            platform_pump_messages(&state);
+        }
+    }
+    platform_shutdown(&state);
     return 0;
 }
