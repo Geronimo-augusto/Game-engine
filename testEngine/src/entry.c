@@ -1,7 +1,7 @@
 #include <entry.h>
 #include "game.h"
-//TODO: REMOVER DEPOIS
-#include <core/platform/platform.h>
+
+#include <core/memory.h>
 
 // Definição da funçao criar jogo
 b8 create_game(game* out_game){
@@ -18,6 +18,6 @@ b8 create_game(game* out_game){
     out_game->on_resize = game_on_resize;
 
     //criaçao do estado do jogo
-    out_game->state = platform_allocate(sizeof(game_state), TRUE);
+    out_game->state = kallocate(sizeof(game_state), MEMORY_TAG_GAME);
     return TRUE;
 }

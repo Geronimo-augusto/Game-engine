@@ -2,6 +2,7 @@
 
 #include "core/application.h"
 #include "core/logger.h"
+#include "core/memory.h"
 #include "game_types.h"
 //pra formataçao funcionar
 // #include <windows.h>
@@ -13,6 +14,8 @@ extern b8 create_game(game* out_game);
 int main(void){
     //formatação de console para utf-8 (se ativa pelas configs do windows nao precisa)
     // SetConsoleOutputCP(CP_UTF8);
+
+    initialize_memory();
 
     game game_inst;
     if(!create_game(&game_inst)){
@@ -38,5 +41,7 @@ int main(void){
         return 2;
     }
     
+    shutdown_memory();
+
     return 0;
 }

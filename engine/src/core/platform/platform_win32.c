@@ -26,7 +26,7 @@ b8 platform_startup(
     i32 y,
     i32 width,
     i32 height) {
-    plat_state->internal_state = malloc(sizeof(internal_state));
+    plat_state->internal_state = malloc(sizeof(internal_state));// o uso do malloc, (uso dinamico de memoria), nao é normalmente recomendado. Entretando por estar em uma layer de "inializaçao", esse uso dinamico não é tao significativo.
     internal_state *state = (internal_state *)plat_state->internal_state;
 
     state->h_instance = GetModuleHandleA(0);
