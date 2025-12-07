@@ -3,6 +3,7 @@
 #include "logger.h"
 #include "platform/platform.h"
 #include "memory.h"
+#include "event.h"
 
 
 typedef struct application_state{
@@ -29,17 +30,13 @@ b8 application_create(game* game_inst){
     // Inicializaçao de substistemas
     initialize_logging();
 
-    // TODO: Teste:
-    KFATAL ("Esse é um log fatal: %f", 3.14f);
-    KERROR ("Esse é um log fatal: %f", 3.14f);
-    KWARN ("Esse é um log fatal: %f", 3.14f);
-    KINFO ("Esse é um log fatal: %f", 3.14f);
-    KDEBUG ("Esse é um log fatal: %f", 3.14f);
-    KTRACE ("Esse é um log fatal: %f", 3.14f);
-
     app_state.is_running = TRUE;
     app_state.is_suspended = FALSE;
 
+    if(!evente_initialize()){
+        KFATAL("Falha na inicialização do sistema de eventos");
+        return FALSE;
+    }
     
     if(!platform_startup(
         &app_state.platform,
@@ -93,6 +90,7 @@ b8 application_run(){
 
     app_state.is_running = FALSE;
 
+    event_shutdown();
     platform_shutdown(&app_state.platform);
 
     return TRUE;

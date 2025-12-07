@@ -111,4 +111,6 @@ char* get_memory_usage_string(){
     }
     char* out_string = _strdup(buffer);// não é o ideal
     return out_string;
+
+    
 }
