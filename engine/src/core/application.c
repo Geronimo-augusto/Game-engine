@@ -4,6 +4,7 @@
 #include "platform/platform.h"
 #include "memory.h"
 #include "event.h"
+#include "input.h"
 
 
 typedef struct application_state{
@@ -29,6 +30,7 @@ b8 application_create(game* game_inst){
 
     // Inicializaçao de substistemas
     initialize_logging();
+    input_initialize();
 
     app_state.is_running = TRUE;
     app_state.is_suspended = FALSE;
@@ -85,12 +87,18 @@ b8 application_run(){
                 app_state.is_running = FALSE;
                 break;
             }
+
+            // NOTE: A atualização de entrada/copiar o estado deve sempre ser tratada após qualquer entrada ser registrada; ou seja, antes desta linha. 
+            //Por segurança, a entrada é a última coisa a ser atualizada antes do término Frame.
+            input_update(0);
         }
     }
 
     app_state.is_running = FALSE;
 
     event_shutdown();
+    input_shutdown();
+
     platform_shutdown(&app_state.platform);
 
     return TRUE;
