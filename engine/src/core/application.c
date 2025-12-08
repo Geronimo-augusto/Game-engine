@@ -20,6 +20,10 @@ typedef struct application_state{
 static b8 initialize = FALSE;
 static application_state app_state;
 
+// Event handlers
+b8 application_on_event(u16 code, void* sender, void* listener_inst, event_context context);
+b8 application_on_key(u16 code, void* sender, void* listener_inst, event_context context);
+
 b8 application_create(game* game_inst){
     if(initialize){
         KERROR("Aplicação ja inicializada");
@@ -39,7 +43,14 @@ b8 application_create(game* game_inst){
         KFATAL("Falha na inicialização do sistema de eventos");
         return FALSE;
     }
+
+    // Registra os eventos da aplicação
+    event_register(EVENT_CODE_APPLICATION_QUIT, 0, application_on_event);
+    event_register(EVENT_CODE_KEY_PRESSED, 0, application_on_key);
+    event_register(EVENT_CODE_KEY_RELEASED, 0, application_on_key);
     
+
+    // Inicializa a plataforma
     if(!platform_startup(
         &app_state.platform,
        game_inst-> app_config.name,
@@ -96,6 +107,10 @@ b8 application_run(){
 
     app_state.is_running = FALSE;
 
+    event_unregister(EVENT_CODE_APPLICATION_QUIT, 0, application_on_event);
+    event_unregister(EVENT_CODE_KEY_PRESSED, 0, application_on_key);
+    event_unregister(EVENT_CODE_KEY_RELEASED, 0, application_on_key);
+
     event_shutdown();
     input_shutdown();
 
@@ -103,3 +118,47 @@ b8 application_run(){
 
     return TRUE;
 } 
+
+b8 application_on_event(u16 code, void* sender, void* listener_inst, event_context context){
+    switch(code){
+        case EVENT_CODE_APPLICATION_QUIT: {
+            KINFO("Evento de saída da aplicação recebido. Desligando...");
+            app_state.is_running = FALSE;
+            return TRUE;
+        }
+    }
+    return FALSE;
+}
+
+b8 application_on_key(u16 code, void* sender, void* listener_inst, event_context context){
+   if (code == EVENT_CODE_KEY_PRESSED) {
+        u16 key = context.data.u16[0];
+        switch (key){
+            case KEY_ESCAPE:{
+                //NOTE: tecnnicamente esta disparando um evento dentro de outro evento, mas pode ter outros listeners
+                event_context data ={};
+                event_fire(EVENT_CODE_APPLICATION_QUIT, 0, data);
+                // bloqueia o evento para outros listeners
+                return TRUE;
+            }break;
+            case KEY_A:{
+                // teste test
+                KDEBUG("A tecla A foi pressionada");
+            }break;
+            default:{
+                KDEBUG("Tecla '%c' pressionada", key);
+            }break;
+        }
+    } else if (code == EVENT_CODE_KEY_RELEASED) {
+        u16 key = context.data.u16[0];
+        switch (key){
+            case KEY_B:{
+                KDEBUG("A tecla B foi solta");
+            }
+            default:{
+                KDEBUG("Tecla '%c' solta", key);
+            }
+        }
+   }
+    return FALSE;
+}

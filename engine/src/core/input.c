@@ -81,7 +81,7 @@ void input_process_button(buttons button, b8 pressed){
     }
 }   
 
-void input_process_mouse_move(i16x, i16y){
+void input_process_mouse_move(i32 x, i32 y){
     // Atualiza a posição do mouse apenas se mudar
     if(state.current_mouse.x != x || state.current_mouse.y != y){
         // NOTE: remova o comentario pra fazer debug, se quiser poder copiar no de keyboard tambem
@@ -98,7 +98,7 @@ void input_process_mouse_move(i16x, i16y){
     }
 }
 
-void input_process_mouse_wheel(i8 z_delta){
+void input_process_mouse_wheel(i32 z_delta){
     // NOTE: Não tem um internal state pro wheel
     // Dispara o evento de roda do mouse
     event_context context;

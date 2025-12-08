@@ -9,7 +9,7 @@ typedef enum buttons{
     BUTTON_X1,
     BUTTON_X2,
     BUTTON_MAX_BUTTONS
-} buttons
+} buttons;
 
 // Um pequeno macro para ajudar a definir as keys
 #define DEFINE_KEY(name, code) KEY_##name = code
