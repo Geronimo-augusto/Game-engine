@@ -10,7 +10,9 @@
                 "cwd": "${workspaceFolder}/engine",
                 "shell": {
                     "executable": "cmd.exe",
-                    "args": ["/c"]
+                    "args": [
+                        "/c"
+                    ]
                 }
             },
             "problemMatcher": [
@@ -29,7 +31,9 @@
                 "cwd": "${workspaceFolder}/testEngine",
                 "shell": {
                     "executable": "cmd.exe",
-                    "args": ["/c"]
+                    "args": [
+                        "/c"
+                    ]
                 }
             },
             "problemMatcher": [
@@ -41,13 +45,15 @@
             "type": "shell",
             "label": "Build Everything",
             "windows": {
-                "command": "${workspaceFolder}/build-all.bat",
+                "command": "${workspaceFolder}/build-all.bat"
             },
             "options": {
                 "cwd": "${workspaceFolder}",
                 "shell": {
                     "executable": "cmd.exe",
-                    "args": ["/c"]
+                    "args": [
+                        "/c"
+                    ]
                 }
             },
             "problemMatcher": [
@@ -55,8 +61,32 @@
             ],
             "group": {
                 "kind": "build",
-                "isDefault": true
+                "isDefault": false
             }
+        },
+        {
+            "type": "cppbuild",
+            "label": "C/C++: clang.exe arquivo de build ativo",
+            "command": "E:\\programas\\LLVM\\bin\\clang.exe",
+            "args": [
+                "-fcolor-diagnostics",
+                "-fansi-escape-codes",
+                "-g",
+                "${file}",
+                "-o",
+                "${fileDirname}\\${fileBasenameNoExtension}.exe"
+            ],
+            "options": {
+                "cwd": "${fileDirname}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "detail": "Tarefa gerada pelo Depurador."
         }
     ],
     "version": "2.0.0"

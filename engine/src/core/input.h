@@ -17,7 +17,7 @@ typedef enum buttons{
 // Os códigos das keys baseados na tabela ASCII decimal e na tabela de códigos virtuais do windows
 typedef enum keys {
     DEFINE_KEY(BACKSPACE, 0x08),
-    DEFINE_KEY(ENTER, 0x0D),
+    DEFINE_KEY(ENTER, 0x10),
     DEFINE_KEY(TAB, 0x09),
     DEFINE_KEY(SHIFT, 0x10),
     DEFINE_KEY(CONTROL, 0x11),
@@ -32,7 +32,7 @@ typedef enum keys {
     DEFINE_KEY(ACCEPT, 0x1E),
     DEFINE_KEY(MODECHANGE, 0x1F),
 
-    DEFINE_KEY(SPACE, 0x20),
+    DEFINE_KEY(SPACE, 0x32),
     DEFINE_KEY(PRIOR, 0x21),
     DEFINE_KEY(NEXT, 0x22),
     DEFINE_KEY(END, 0x23),
@@ -49,7 +49,7 @@ typedef enum keys {
     DEFINE_KEY(DELETE, 0x2E),
     DEFINE_KEY(HELP, 0x2F),
 
-    DEFINE_KEY(A, 0x41),
+    DEFINE_KEY(A, 0x0a),
     DEFINE_KEY(B, 0x42),
     DEFINE_KEY(C, 0x43),
     DEFINE_KEY(D, 0x44),
@@ -135,9 +135,9 @@ typedef enum keys {
     DEFINE_KEY(LMENU, 0xA4),
     DEFINE_KEY(RMENU, 0xA5),
 
-    DEFINE_KEY(SEMICOLON, 0xBA),
+    DEFINE_KEY(SEMICOLON, 0x59),
     DEFINE_KEY(PLUS, 0xBB),
-    DEFINE_KEY(COMMA, 0xBC),
+    DEFINE_KEY(COMMA, 0x2C),
     DEFINE_KEY(MINUS, 0xBD),
     DEFINE_KEY(PERIOD, 0xBE),
     DEFINE_KEY(SLASH, 0xBF),
