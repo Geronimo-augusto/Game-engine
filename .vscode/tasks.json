@@ -45,7 +45,7 @@
             "type": "shell",
             "label": "Build Everything",
             "windows": {
-                "command": "${workspaceFolder}/build-all.bat"
+                "command": "${workspaceFolder}/build-all.bat",
             },
             "options": {
                 "cwd": "${workspaceFolder}",
@@ -61,32 +61,8 @@
             ],
             "group": {
                 "kind": "build",
-                "isDefault": false
-            }
-        },
-        {
-            "type": "cppbuild",
-            "label": "C/C++: clang.exe arquivo de build ativo",
-            "command": "E:\\programas\\LLVM\\bin\\clang.exe",
-            "args": [
-                "-fcolor-diagnostics",
-                "-fansi-escape-codes",
-                "-g",
-                "${file}",
-                "-o",
-                "${fileDirname}\\${fileBasenameNoExtension}.exe"
-            ],
-            "options": {
-                "cwd": "${fileDirname}"
-            },
-            "problemMatcher": [
-                "$gcc"
-            ],
-            "group": {
-                "kind": "build",
                 "isDefault": true
-            },
-            "detail": "Tarefa gerada pelo Depurador."
+            }
         }
     ],
     "version": "2.0.0"

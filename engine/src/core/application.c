@@ -266,7 +266,7 @@ b8 application_on_event(u16 code, void* sender, void* listener_inst, event_conte
 }
 
 b8 application_on_key(u16 code, void* sender, void* listener_inst, event_context context){
-    // KDEBUG(code)
+    KDEBUG("codigo passado '%c'", 1)
    if (code == EVENT_CODE_KEY_PRESSED) {
         u16 key = context.data.u16[0];
         switch (key){
