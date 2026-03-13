@@ -1,6 +1,7 @@
 #include "memory.h"
 #include "platform/platform.h"
 #include "logger.h"
+#include "core/string.h"
 
 //TODO: biblioteca customizada de String
 #include <string.h>
@@ -109,7 +110,7 @@ char* get_memory_usage_string(){
         i32 length = snprintf(buffer + offset,8000 ,"  %s : %.2f %s\n", memory_tag_strings[i], amount, unit);
         offset += length;
     }
-    char* out_string = _strdup(buffer);// não é o ideal
+    char* out_string = string_duplicate(buffer);// não é o ideal
     return out_string;
 
     

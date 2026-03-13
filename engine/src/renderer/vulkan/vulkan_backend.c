@@ -3,6 +3,10 @@
 #include "vulkan_types.inl"
 
 #include "core/logger.h"
+// #include "core/s"
+
+#include "containers/darray.h"
+#include "platform/platform.h"
 
 // Contexto estatico do Vulkan
 static vulkan_context context;
@@ -27,7 +31,7 @@ b8 vulkan_initialize(renderer_backend* backend, const char* application_name, st
     create_info.pApplicationInfo = &app_info;
     create_info.enabledExtensionCount = 0;
     create_info.ppEnabledExtensionNames=0;
-    create_info.enabledLayerCount = 0;
+    create_info.enabledLayerCount = 0; // vai nos permitir fazer debug, algo que o vulkan nao faz por padrão
     create_info.ppEnabledLayerNames = 0;
 
     VkResult result = vkCreateInstance(&create_info, context.allocator, &context.instance);
