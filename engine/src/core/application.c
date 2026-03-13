@@ -196,14 +196,14 @@ b8 application_on_key(u16 code, void* sender, void* listener_inst, event_context
         switch (key){
             case KEY_ESCAPE:{
                 //NOTE: tecnnicamente esta disparando um evento dentro de outro evento, mas pode ter outros listeners
-                // event_context data ={};
-                // event_fire(EVENT_CODE_APPLICATION_QUIT, 0, data);
+                event_context data ={};
+                event_fire(EVENT_CODE_APPLICATION_QUIT, 0, data);
                 // bloqueia o evento para outros listeners
                 return TRUE;
             }break;
             case KEY_A:{
                 // teste test
-                // KDEBUG("A tecla A foi pressionada");
+                KDEBUG("A tecla A foi pressionada");
             }break;
             default:{
                 KDEBUG("Tecla '%c' pressionada", key);
