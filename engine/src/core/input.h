@@ -49,7 +49,7 @@ typedef enum keys {
     DEFINE_KEY(DELETE, 0x2E),
     DEFINE_KEY(HELP, 0x2F),
 
-    DEFINE_KEY(A, 0x0a),
+    DEFINE_KEY(A, 0x41),
     DEFINE_KEY(B, 0x42),
     DEFINE_KEY(C, 0x43),
     DEFINE_KEY(D, 0x44),
@@ -135,7 +135,8 @@ typedef enum keys {
     DEFINE_KEY(LMENU, 0xA4),
     DEFINE_KEY(RMENU, 0xA5),
 
-    DEFINE_KEY(SEMICOLON, 0x59),
+    DEFINE_KEY(Cedilha, 0xe7),
+    DEFINE_KEY(SEMICOLON, 191),
     DEFINE_KEY(PLUS, 0xBB),
     DEFINE_KEY(COMMA, 0x2C),
     DEFINE_KEY(MINUS, 0xBD),

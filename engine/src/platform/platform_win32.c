@@ -96,7 +96,7 @@ b8 platform_startup(
     }
 
     // Mostrar a janela
-    b32 should_activate = 1; // TODO: Se a Janale nao deve aceitar input, deve ser 0
+    b32 should_activate = 1; // NOTE: Se a Janale nao deve aceitar input, deve ser 0
     i32 show_window_command_flags = should_activate ? SW_SHOW : SW_SHOWNOACTIVATE;     // o Show faz com que aceite input, o Shownoactivate nao aceita input
     // Se precisar inicializar minimizado ou maximizado, adicionar os flags: SW_MINIMIZE : SW_SHOWMINNOACTIVE  ou SW_SHOWMAXIMIZED : SW_MAXIMIZE 
 
@@ -212,7 +212,8 @@ LRESULT CALLBACK win32_process_message(HWND hwnd, u32 msg, WPARAM w_param, LPARA
         case WM_SYSKEYUP:{
             // Key apertqada/solta
             b8 pressed = (msg == WM_KEYDOWN || msg == WM_SYSKEYDOWN);
-            keys key = (keys)w_param;
+            // int pressed2 = (WM_CHAR);
+            keys key = (u16)w_param;
             input_process_key(key,pressed);
         }break;
         case WM_MOUSEMOVE:{

@@ -9,6 +9,7 @@
 
 
 
+
 b8 initialize_logging() {
     // TODO: criaçao de arquivos de log
     return TRUE;
@@ -17,6 +18,8 @@ b8 initialize_logging() {
 void shutdown_logging(){
     // TODO: limpreza de loggs/escrever entradas pendentes
 }
+
+
 
 void log_output(log_level level, const char* menssgem, ...){
     const char* level_strings[6] = {
@@ -38,6 +41,7 @@ void log_output(log_level level, const char* menssgem, ...){
     // Formatação da mensagem original.
     // NOTE: O MicroSoftwares's headers sobrescreve o GCC/Clang va_list com um "typedef char* va_list", causando alguns erros estranhos. Por enquanto usaremso o __builtin_va_list,
     // Que é um tipo esperado pelo GCC/Clang.
+    
     __builtin_va_list args_ptr;
     va_start(args_ptr, menssgem);
     vsnprintf(out_message,32000, menssgem, args_ptr);
@@ -56,4 +60,4 @@ void log_output(log_level level, const char* menssgem, ...){
 
 void report_assertion_failure(const char* expression, const char* message, const char* file, i32 line){
     log_output(LOG_LEVEL_NONE, "Assertion failed: (%s), message: %s, in file: %s, line: %d", expression, message, file, line);
-}
+} 

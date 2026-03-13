@@ -85,7 +85,7 @@ void input_process_mouse_move(i32 x, i32 y){
     // Atualiza a posição do mouse apenas se mudar
     if(state.current_mouse.x != x || state.current_mouse.y != y){
         // NOTE: remova o comentario pra fazer debug, se quiser poder copiar no de keyboard tambem
-        // KDEBUG("Mouse movido para (%d, %d)", x, y);
+        KDEBUG("Mouse movido para (%d, %d)", x, y);
         // Atualiza o estado interno
         state.current_mouse.x = x;
         state.current_mouse.y = y;

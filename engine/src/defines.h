@@ -45,7 +45,7 @@ STATIC_ASSERT(sizeof(f64) == 8, "Expected f64 to be 8 bytes.");
 #define FALSE 0
 
 // Platform detection
-// NOTE: Esses K no inicio de algumas defines é para evitar conflito com outras libs. tendo o siginificado de kohi(o tutorial que estou seguindo)
+// NOTE: Esses K no inicio de algumas defines é para evitar conflito com outras libs. tendo o significado de kohi(o tutorial que estou seguindo)
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) 
 #define KPLATFORM_WINDOWS 1
 #ifndef _WIN64

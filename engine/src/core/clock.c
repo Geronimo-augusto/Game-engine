@@ -1,0 +1,20 @@
+#include "clock.h"
+
+#include "platform/platform.h"
+
+// NOTE: Sistema rudimentar de relogio que sera alterado mais pra frente
+
+void clock_update(clock* clock){
+    if(clock->start_time !=0){
+        clock->elapsed = platform_get_abs_time() - clock->start_time;
+    }
+}
+
+void clock_start(clock* clock){
+    clock->start_time = platform_get_abs_time();
+    clock->elapsed = 0;
+}
+
+void clock_stop(clock* clock){
+    clock->start_time = 0;
+}
